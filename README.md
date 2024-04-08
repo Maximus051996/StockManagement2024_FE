@@ -1,0 +1,1 @@
+# StockManagement2024_FE
