@@ -1,0 +1,53 @@
+@if(isLoader){
+<p-progressBar mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+}
+<form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
+  <mat-card class="mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>Login Here</mat-card-title>
+    </mat-card-header>
+    <mat-card-content fxLayout="column" fxLayoutGap="20px">
+      <mat-form-field class="login-form-full-width" appearance="outline">
+        <mat-label>User Name</mat-label>
+        <input
+          matInput
+          autocomplete="off"
+          placeholder="Ex . GoogleSeth"
+          formControlName="userName"
+          required
+        />
+        <mat-icon matSuffix>account_box</mat-icon>
+        <mat-error *ngIf="loginForm.get('userName')?.invalid">
+          Please enter a valid Username.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="login-form-full-width" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          autocomplete="off"
+          placeholder="Ex. Password"
+          formControlName="userPassword"
+          required
+        />
+        <mat-icon matSuffix>lock</mat-icon>
+        <mat-error *ngIf="loginForm.get('userPassword')?.invalid">
+          Please enter a valid password.
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions fxLayoutAlign="center">
+      <button
+        mat-raised-button
+        color="primary"
+        class="big-btn"
+        [disabled]="loginForm.invalid"
+        type="submit"
+      >
+        Submit
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>

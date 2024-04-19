@@ -1,0 +1,103 @@
+/* Header Styles */
+.app-side-nav {
+  width: 100%;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #4e303af0;
+  color: white;
+}
+
+.with-icon {
+  display: flex;
+  align-items: center;
+  margin-left: 1.5rem;
+  font-size: large;
+}
+
+.mat-mdc-list-item {
+  box-sizing: content-box;
+  border-radius: 1rem;
+  padding: 0.1rem 0.8rem;
+
+  &:hover {
+    background: #85d49dcb; /* Apply background color on hover */
+  }
+}
+
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.toolbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 1.2rem;
+}
+
+button[mat-icon-button] {
+  color: white;
+}
+
+/* Drawer Styles */
+.drawer-container {
+  height: calc(100vh - 64px); /* Adjust for your header height */
+  min-width: 18rem; /* Set a minimum width to ensure usability */
+}
+::ng-deep.mat-drawer-inner-container {
+  min-width: 17rem;
+  background-color: rgb(238, 250, 215);
+}
+
+mat-nav-list {
+  width: 15rem;
+}
+
+mat-list-item {
+  color: #3f51b5;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+  mat-nav-list {
+    width: 100%;
+  }
+
+  .mat-toolbar .toolbar-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mat-toolbar .toolbar-content .title {
+    margin-top: 0.5rem;
+  }
+
+  a.mat-list-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  a.mat-list-item .mat-icon {
+    margin-right: 0.5rem; /* Adjust spacing between icon and label */
+  }
+}
+
+:host ::ng-deep.p-avatar.p-avatar-circle {
+  margin-left: 1rem;
+  margin-top: 1rem;
+}
+
+.mdc-list-item.mdc-list-item--with-one-line {
+  margin-top: 1rem;
+}

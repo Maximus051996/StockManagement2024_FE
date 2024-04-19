@@ -1,0 +1,54 @@
+.login-form {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically */
+  background: url("/assets/black-login.avif") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: 100vh; /* Set the height of the form to the full viewport height */
+}
+
+.mat-mdc-card {
+  border-radius: 1rem;
+  background-color: #c6bd9fe8;
+  color: #5a0e0e;
+  max-width: 38rem;
+  width: 100%; /* Ensure the card takes up full width */
+}
+
+.mat-mdc-card-header {
+  color: #000;
+  max-width: 95%;
+  background-color: #8b6d5aad;
+  padding: 0.4rem;
+  border-radius: 0.8rem;
+  margin: 1rem 1.3rem 0; /* Combine margin-top and margin-left into one line */
+  justify-content: center;
+  text-align: center; /* Center the text inside the header */
+}
+
+.mat-mdc-card-content {
+  margin-top: 1rem;
+}
+
+.login-form-full-width {
+  width: 100%;
+}
+
+.mat-raised-button {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.big-btn {
+  font-size: 1rem;
+  padding: 1.2rem 18rem;
+}
+
+@media (max-width: 600px) {
+  .mat-card {
+    max-width: 95%; /* Adjust card width for smaller screens */
+  }
+}
