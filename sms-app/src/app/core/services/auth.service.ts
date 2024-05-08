@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,14 @@ export class AuthService {
 
   getJwtToken(): string | null {
     return localStorage.getItem('token');
+  }
+
+  getUserDetails(): any {
+    const token = this.getJwtToken();
+    if (token) {
+      return jwtDecode(token);
+    } else {
+      return null;
+    }
   }
 }

@@ -15,6 +15,8 @@ import { NavigationItem } from './core/interfaces/navigation';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MatDividerModule } from '@angular/material/divider';
+import { ChipModule } from 'primeng/chip';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -33,6 +35,7 @@ import { MatDividerModule } from '@angular/material/divider';
     AvatarModule,
     AvatarGroupModule,
     MatDividerModule,
+    ChipModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -40,35 +43,39 @@ import { MatDividerModule } from '@angular/material/divider';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'sms-app';
   isAuthenticated = false;
+  userName: any;
+  roleName: any;
   authSubscription: Subscription = new Subscription();
   isToken: string | null = null; // Declare isToken property
   navigationItems: NavigationItem[] = [
     {
       routerLink: '/home',
-      url: 'https://png.pngtree.com/png-vector/20230302/ourmid/pngtree-dashboard-line-icon-vector-png-image_6626604.png',
+      path: 'assets/dashboard.png',
       label: 'Dashboard',
     },
     {
-      routerLink: '/home',
-      url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm40rYk_i1sTTwPmcbw5ph6SI3xbh4o2T4KoDhJ_tUHw&s',
+      routerLink: '/company',
+      path: 'assets/company.jpeg',
       label: 'Company',
     },
     {
-      routerLink: '/products',
-      url: 'https://static.vecteezy.com/system/resources/thumbnails/028/047/017/small/3d-check-product-free-png.png',
+      routerLink: '/product',
+      path: 'assets/product.webp',
       label: 'Product',
+    },
+    {
+      routerLink: '/calculation',
+      path: 'assets/calculation.png',
+      label: 'Calculation',
     },
   ];
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {
+    this.getuserData();
+  }
 
   ngOnInit(): void {
-    this.isToken = this.authService.getJwtToken();
-    this.authSubscription = this.authService
-      .isAuthenticated()
-      .subscribe((isAuthenticated: boolean) => {
-        this.isAuthenticated = isAuthenticated;
-      });
+    this.userAuthenticated();
   }
 
   ngOnDestroy(): void {
@@ -80,5 +87,23 @@ export class AppComponent implements OnInit, OnDestroy {
     localStorage.removeItem('token');
     this.authService.disableAuthenticationSubject();
     this.router.navigate(['/login']);
+  }
+
+  userAuthenticated() {
+    this.isToken = this.authService.getJwtToken();
+    this.authSubscription = this.authService
+      .isAuthenticated()
+      .subscribe((isAuthenticated: boolean) => {
+        this.isAuthenticated = isAuthenticated;
+      });
+  }
+
+  getuserData() {
+    const userDetails = this.authService.getUserDetails();
+    if (userDetails) {
+      this.userName = userDetails.userName;
+      this.roleName =
+        userDetails.roleId === 'R1' ? 'Sales Assistant' : 'Instructor';
+    }
   }
 }

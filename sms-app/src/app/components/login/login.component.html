@@ -1,6 +1,11 @@
-@if(isLoader){
-<p-progressBar mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
-}
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
 <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
   <mat-card class="mat-elevation-z8">
     <mat-card-header>
@@ -31,8 +36,12 @@
           placeholder="Ex. Password"
           formControlName="userPassword"
           required
+          [type]="hide ? 'password' : 'text'"
         />
-        <mat-icon matSuffix>lock</mat-icon>
+        <mat-icon matSuffix (click)="hide = !hide">{{
+          hide ? "visibility_off" : "visibility"
+        }}</mat-icon>
+
         <mat-error *ngIf="loginForm.get('userPassword')?.invalid">
           Please enter a valid password.
         </mat-error>
@@ -41,7 +50,7 @@
     <mat-card-actions fxLayoutAlign="center">
       <button
         mat-raised-button
-        color="primary"
+        color="warn"
         class="big-btn"
         [disabled]="loginForm.invalid"
         type="submit"

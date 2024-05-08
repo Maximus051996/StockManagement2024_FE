@@ -101,3 +101,14 @@ mat-list-item {
 .mdc-list-item.mdc-list-item--with-one-line {
   margin-top: 1rem;
 }
+.container {
+  display: grid; /* Use grid for layout */
+  grid-template-columns: auto auto; /* Each div takes up equal space */
+  column-gap: 10px; /* Add some space between the two divs */
+}
+
+.user-details {
+  margin-left: 0.7rem;
+  display: flex; /* Use flexbox for layout */
+  flex-direction: column; /* Arrange items vertically */
+}

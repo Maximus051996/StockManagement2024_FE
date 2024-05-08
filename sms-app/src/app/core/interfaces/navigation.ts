@@ -1,6 +1,5 @@
 export interface NavigationItem {
   routerLink?: string;
-  action?: string;
-  url: string;
+  path: string;
   label: string;
 }

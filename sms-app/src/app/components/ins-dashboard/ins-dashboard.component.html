@@ -1,8 +1,47 @@
 @if(isLoader){
 <p-skeleton
-  width="90rem"
-  height="50rem"
+  width="97.6rem"
+  height="40rem"
   [style]="{ 'margin-left': '5rem', 'margin-top': '2rem' }"
 ></p-skeleton>
+} @if(!isLoader){
+<div class="main-container">
+  <div class="card-container">
+    <mat-card class="card-1">
+      <mat-card-header>
+        <mat-card-title>Total Active Company</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ activeCompanyCount }}</p>
+      </mat-card-content>
+    </mat-card>
 
+    <mat-card class="card-2">
+      <mat-card-header>
+        <mat-card-title>Total Active Members</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ activeUserCount }}</p>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card class="card-3">
+      <mat-card-header>
+        <mat-card-title>Total Damaged Product</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ damageProductCount }}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div>
+    <highcharts-chart
+      [Highcharts]="Highcharts"
+      [options]="chartOptions"
+      class="chart-container"
+    >
+    </highcharts-chart>
+  </div>
+</div>
 }

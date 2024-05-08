@@ -1,4 +1,7 @@
 export class Message {
-  static errorMsg: string = 'Something went wrong or user does not exist !';
+  static errorLoginMsg: string =
+    'Something went wrong or user does not exist !';
   static loginSuccessMsg: string = 'Sucessfully logged in !';
+  static errorMsg: string =
+    'Something went wrong while getting data or token got expired !';
 }

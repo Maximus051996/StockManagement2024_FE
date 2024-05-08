@@ -47,6 +47,10 @@
   padding: 1.2rem 18rem;
 }
 
+.mat-mdc-raised-button:not(:disabled) {
+  background-color: rgb(21 76 10 / 84%);
+}
+
 @media (max-width: 600px) {
   .mat-card {
     max-width: 95%; /* Adjust card width for smaller screens */

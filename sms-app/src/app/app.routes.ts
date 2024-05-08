@@ -3,6 +3,8 @@ import { LoginComponent } from './components/login/login.component';
 import { InsDashboardComponent } from './components/ins-dashboard/ins-dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
 import { ProductsComponent } from './components/products/products.component';
+import { CompanyComponent } from './components/company/company.component';
+import { CalculationComponent } from './components/calculation/calculation.component';
 
 export const routes: Routes = [
   // {
@@ -25,8 +27,18 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'products',
+    path: 'product',
     component: ProductsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'company',
+    component: CompanyComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'calculation',
+    component: CalculationComponent,
     canActivate: [authGuard],
   },
 ];
