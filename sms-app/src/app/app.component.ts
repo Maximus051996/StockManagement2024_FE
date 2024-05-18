@@ -10,12 +10,13 @@ import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './core/services/auth.service';
-import { Subscription } from 'rxjs';
+import { Subscription, filter } from 'rxjs';
 import { NavigationItem } from './core/interfaces/navigation';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChipModule } from 'primeng/chip';
+import { SharedService } from './core/services/shared/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -47,32 +48,13 @@ export class AppComponent implements OnInit, OnDestroy {
   roleName: any;
   authSubscription: Subscription = new Subscription();
   isToken: string | null = null; // Declare isToken property
-  navigationItems: NavigationItem[] = [
-    {
-      routerLink: '/home',
-      path: 'assets/dashboard.png',
-      label: 'Dashboard',
-    },
-    {
-      routerLink: '/company',
-      path: 'assets/company.jpeg',
-      label: 'Company',
-    },
-    {
-      routerLink: '/product',
-      path: 'assets/product.webp',
-      label: 'Product',
-    },
-    {
-      routerLink: '/calculation',
-      path: 'assets/calculation.png',
-      label: 'Calculation',
-    },
-  ];
+  navigationItems: NavigationItem[] = [];
 
-  constructor(private router: Router, private authService: AuthService) {
-    this.getuserData();
-  }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private sharedService: SharedService
+  ) {}
 
   ngOnInit(): void {
     this.userAuthenticated();
@@ -86,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isToken = null;
     localStorage.removeItem('token');
     this.authService.disableAuthenticationSubject();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/sms/login']);
   }
 
   userAuthenticated() {
@@ -95,6 +77,13 @@ export class AppComponent implements OnInit, OnDestroy {
       .isAuthenticated()
       .subscribe((isAuthenticated: boolean) => {
         this.isAuthenticated = isAuthenticated;
+        if (isAuthenticated) {
+          this.getuserData();
+        }
+
+        if (!this.isToken && this.router.url !== '/sms/login') {
+          this.router.navigate(['/sms/login']);
+        }
       });
   }
 
@@ -102,8 +91,51 @@ export class AppComponent implements OnInit, OnDestroy {
     const userDetails = this.authService.getUserDetails();
     if (userDetails) {
       this.userName = userDetails.userName;
-      this.roleName =
-        userDetails.roleId === 'R1' ? 'Sales Assistant' : 'Instructor';
+      switch (userDetails.roleId) {
+        case 'R1':
+          this.roleName = 'Sales Assistant';
+          this.navigationItems = [];
+          this.navigationItems.push(
+            {
+              routerLink: '/sa/companydetails',
+              path: 'assets/company.jpeg',
+              label: 'Company',
+            },
+            {
+              routerLink: '/sa/productdetails',
+              path: 'assets/product.webp',
+              label: 'Product',
+            }
+          );
+          break;
+        case 'R2':
+          this.roleName = 'Instructor';
+          this.navigationItems = [];
+          this.navigationItems.push(
+            {
+              routerLink: '/ins/home',
+              path: 'assets/dashboard.png',
+              label: 'Dashboard',
+            },
+            {
+              routerLink: '/ins/company',
+              path: 'assets/company.jpeg',
+              label: 'Company',
+            },
+            {
+              routerLink: '/ins/product',
+              path: 'assets/product.webp',
+              label: 'Product',
+            },
+            {
+              routerLink: '/ins/calculation',
+              path: 'assets/calculation.png',
+              label: 'Calculation',
+            }
+          );
+          break;
+        // Add more cases as needed
+      }
     }
   }
 }

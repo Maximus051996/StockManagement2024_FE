@@ -51,7 +51,6 @@ export class DashboardService {
       const res = await this.http
         .get<any>(`${this.serverUrl}top-five-productCountAsc-list`)
         .toPromise();
-      console.log(res);
       return res;
     } catch (error) {
       this.sharedService.openSnackBar(Message.errorMsg, 'OK');

@@ -34,10 +34,12 @@
             ></p-avatar>
           </div>
           <div class="user-details">
-            <div style="margin-top: 1rem; font-size: 1.1rem">
+            <div
+              style="margin-top: 1rem; margin-left: 0.5rem; font-size: 1.1rem"
+            >
               {{ userName | uppercase }}
             </div>
-            <div style="margin-top: 0.8rem">
+            <div style="margin-top: 0.8rem; font-size: 0.01rem">
               <p-chip label="{{ roleName }}"></p-chip>
             </div>
           </div>
@@ -61,5 +63,5 @@
     </div>
   </mat-drawer-container>
 </div>
-<router-outlet *ngIf="isAuthenticated && !isToken"></router-outlet>
+
 <app-login *ngIf="!isAuthenticated && !isToken"></app-login>

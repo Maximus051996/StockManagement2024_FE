@@ -9,7 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../../../environments/environment.development';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedService } from '../../core/services/shared/shared.service';
@@ -43,13 +43,17 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private sharedService: SharedService,
-    private http: HttpClient,
     private userService: UserService
   ) {}
   ngOnInit() {
     this.createForm();
     if (this.authService.getJwtToken()) {
-      this.router.navigate(['/home']);
+      const userDetails = this.authService.getUserDetails();
+      if (userDetails.roleId === 'R1') {
+        this.router.navigate(['/sa/companydetails']);
+      } else if (userDetails.roleId === 'R2') {
+        this.router.navigate(['/ins/home']);
+      }
     }
   }
   createForm() {
@@ -60,24 +64,33 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit() {
-    if (this.loginForm.valid) {
-      const formData = this.loginForm.value;
+    if (!this.loginForm.valid) return;
+
+    try {
       this.sharedService.showSpinner();
-      let response = await this.userService.Userlogin(formData);
+      const formData = this.loginForm.value;
+      const response = await this.userService.Userlogin(formData);
+
       if (response.token) {
-        setTimeout(() => {
-          localStorage.setItem('token', response.token);
-          this.router.navigate(['/home']);
-          this.sharedService.openSnackBar(Message.loginSuccessMsg, 'OK');
-          this.authService.enableAuthenticationSubject();
-          location.reload();
-        }, 3000);
+        localStorage.setItem('token', response.token);
+        const userDetails = this.authService.getUserDetails();
+        this.authService.enableAuthenticationSubject();
+
+        if (userDetails.roleId === 'R1') {
+          this.router.navigate(['/sa/companydetails']);
+        } else if (userDetails.roleId === 'R2') {
+          this.router.navigate(['/ins/home']);
+        }
+
+        this.sharedService.openSnackBar(Message.loginSuccessMsg, 'OK');
       } else {
-        setTimeout(() => {
-          this.sharedService.hideSpinner();
-          this.sharedService.openSnackBar(Message.errorLoginMsg, 'OK');
-        }, 3000);
+        throw new Error('Login failed');
       }
+    } catch (error) {
+      this.sharedService.openSnackBar(Message.errorLoginMsg, 'OK');
+      throw error;
+    } finally {
+      this.sharedService.hideSpinner();
     }
   }
 }

@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-left: 4rem;
+  margin-top: 4rem;
+}
+
+.form-field {
+  width: 80%;
+  background-color: white !important;
+}
+
+.button-container {
+  display: flex;
+  margin-top: 2rem;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.btn-cls {
+  width: 7rem;
+  height: 2.8rem;
+}

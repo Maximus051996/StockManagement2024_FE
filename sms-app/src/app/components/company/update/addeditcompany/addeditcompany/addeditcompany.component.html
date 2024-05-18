@@ -1,0 +1,42 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<form [formGroup]="addeditForm" (ngSubmit)="saveCompany()">
+  <div class="container">
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Company Name</mat-label>
+      <input
+        matInput
+        formControlName="companyName"
+        placeholder="Enter Company Name"
+      />
+      @if(addeditForm.invalid){
+      <mat-hint>Company Name required .</mat-hint>
+      }
+    </mat-form-field>
+
+    <div class="button-container">
+      <p-button
+        type="submit"
+        label="Save"
+        [rounded]="true"
+        severity="success"
+        [disabled]="addeditForm.invalid"
+      >
+      </p-button>
+      <p-button
+        label="Cancel"
+        [rounded]="true"
+        severity="Danger"
+        type="button"
+        (click)="cancel()"
+      >
+      </p-button>
+    </div>
+  </div>
+</form>

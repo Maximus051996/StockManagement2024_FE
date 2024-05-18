@@ -44,6 +44,15 @@ export class InsDashboardComponent implements OnInit {
         await this.dashboardService.getDamageProductCountDetails();
       this.activeUserCount =
         await this.dashboardService.getActiveUserCountDetails();
+      await this.getchartDetails();
+      this.isLoader = false;
+    } catch (error) {
+      // Handle error
+    }
+  }
+
+  async getchartDetails() {
+    try {
       let data = await this.dashboardService.top5CompanyDetails();
       const chartData = data.map((item: any) => ({
         name: item.companyName,
@@ -101,13 +110,6 @@ export class InsDashboardComponent implements OnInit {
           ],
         };
       }
-      this.isLoader = false;
-    } catch (error) {
-      // Handle error
-    }
+    } catch (error) {}
   }
-
-  getchartDetails() {}
-
-  // Function to shade color
 }

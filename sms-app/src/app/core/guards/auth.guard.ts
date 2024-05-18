@@ -14,6 +14,6 @@ export const authGuard: CanActivateFn = (
   if (localStorage.getItem('token')) {
     return true;
   }
-  router.navigate(['/login']);
+  router.navigate(['/sms/login']);
   return false;
 };

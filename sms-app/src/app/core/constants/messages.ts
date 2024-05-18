@@ -4,4 +4,6 @@ export class Message {
   static loginSuccessMsg: string = 'Sucessfully logged in !';
   static errorMsg: string =
     'Something went wrong while getting data or token got expired !';
+  static errorAddeditdeleteMsg: string =
+    'Something went wrong or token got expired !';
 }
