@@ -18,7 +18,7 @@ export class DashboardService {
       return res.activecompanyCount;
     } catch (error) {
       this.sharedService.openSnackBar(Message.errorMsg, 'OK');
-      return 0; // Return default value or handle the error accordingly
+      return 0;
     }
   }
 
@@ -30,7 +30,7 @@ export class DashboardService {
       return res.userCount;
     } catch (error) {
       this.sharedService.openSnackBar(Message.errorMsg, 'OK');
-      return 0; // Return default value or handle the error accordingly
+      return 0;
     }
   }
 
@@ -42,19 +42,19 @@ export class DashboardService {
       return res.productCount;
     } catch (error) {
       this.sharedService.openSnackBar(Message.errorMsg, 'OK');
-      return 0; // Return default value or handle the error accordingly
+      return 0;
     }
   }
 
-  async top5CompanyDetails(): Promise<any> {
+  async chartAllCompanyDetails(): Promise<any> {
     try {
       const res = await this.http
-        .get<any>(`${this.serverUrl}top-five-productCountAsc-list`)
+        .get<any>(`${this.serverUrl}all-productCount-totalQuantityDesc`)
         .toPromise();
       return res;
     } catch (error) {
       this.sharedService.openSnackBar(Message.errorMsg, 'OK');
-      return 0; // Return default value or handle the error accordingly
+      return 0;
     }
   }
 }

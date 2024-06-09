@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 6rem;
+  flex-wrap: wrap;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+.row-sub-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.dropdown-container {
+  width: 45%;
+  margin-bottom: 1rem;
+}
+.row1-sub-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6; /* You can adjust the opacity to make it look disabled */
+  /* Any other styles to visually indicate it's disabled */
+}
+.error-message {
+  color: red;
+  font-size: 0.75rem;
+}
+
+.number-date-container-textbox {
+  display: flex;
+  flex-direction: column;
+  width: 31%;
+  flex-wrap: wrap;
+}
+
+.number-date-container-textbox,
+.dropdown-container label {
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.button-cls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .dropdown-container,
+  .input-container {
+    width: 100%;
+  }
+}

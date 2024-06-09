@@ -1,0 +1,173 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="container">
+  <form [formGroup]="addeditForm">
+    <div class="row-sub-container">
+      <div class="dropdown-container" [class.disabled]="isEdit">
+        <label for="companyName">Company</label>
+        <p-dropdown
+          [options]="companyList"
+          id="companyName"
+          aria-describedby="companyName-help"
+          formControlName="selectedCompany"
+          optionLabel="companyName"
+          [filter]="true"
+          filterBy="companyName"
+          [showClear]="true"
+          placeholder="Select a company"
+          (onChange)="onCompanyChange($event.value)"
+        >
+          <ng-template pTemplate="selectedItem" let-selectedOption>
+            <div class="flex align-items-center gap-2">
+              <div>{{ selectedOption.companyName }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-company pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ company.companyName }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <small
+          id="companyName-help"
+          *ngIf="
+            addeditForm.get('selectedCompany')?.invalid &&
+            addeditForm.get('selectedCompany')?.touched
+          "
+          class="error-message"
+          >Please select a company name.</small
+        >
+      </div>
+      <div
+        class="dropdown-container"
+        [class.disabled]="!addeditForm.get('selectedCompany')?.value || isEdit"
+      >
+        <label for="productName">Product</label>
+        <p-dropdown
+          [options]="filteredProductList"
+          id="productName"
+          aria-describedby="productName-help"
+          formControlName="selectedProduct"
+          optionLabel="productName"
+          [filter]="true"
+          filterBy="productName"
+          [showClear]="true"
+          placeholder="Select a product"
+          [disabled]="!addeditForm.get('selectedCompany')?.value"
+        >
+          <ng-template pTemplate="selectedItem" let-selectedOption>
+            <div class="flex align-items-center gap-2">
+              <div>{{ selectedOption.productName }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-product pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ product.productName }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <small
+          *ngIf="
+            addeditForm.get('selectedProduct')?.invalid &&
+            addeditForm.get('selectedProduct')?.touched
+          "
+          class="error-message"
+          >Please select a product name.</small
+        >
+      </div>
+    </div>
+    <div class="row1-sub-container">
+      <div class="number-date-container-textbox">
+        <label for="quantity">Quantity</label>
+        <p-inputNumber
+          [style]="{ width: '100%' }"
+          id="quantity"
+          decrementButtonClass="p-button-danger"
+          incrementButtonClass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          [showButtons]="true"
+          buttonLayout="horizontal"
+          spinnerMode="horizontal"
+          formControlName="quantity"
+          placeholder="Enter quantity"
+        ></p-inputNumber>
+        <small
+          *ngIf="
+            addeditForm.get('quantity')?.invalid &&
+            addeditForm.get('quantity')?.touched
+          "
+          class="error-message"
+          >Quantity is required.</small
+        >
+      </div>
+      <div class="number-date-container-textbox" style="margin-left: 3rem">
+        <label for="mrp">MRP</label>
+        <p-inputNumber
+          id="mrp"
+          [style]="{ width: '100%' }"
+          formControlName="mrp"
+          mode="currency"
+          currency="INR"
+          currencyDisplay="code"
+          locale="en-IN"
+        ></p-inputNumber>
+        <small
+          *ngIf="
+            addeditForm.get('mrp')?.invalid && addeditForm.get('mrp')?.touched
+          "
+          class="error-message"
+          >MRP is required.</small
+        >
+      </div>
+      <div
+        class="number-date-container-textbox"
+        style="margin-left: 3rem"
+        [class.disabled]="isEdit"
+      >
+        <label for="dOExpiry">Expiry Date</label>
+        <p-calendar
+          id="dOExpiry"
+          [style]="{ width: '100%' }"
+          formControlName="dOExpiry"
+          [showIcon]="true"
+          [showOnFocus]="false"
+          placeholder="Select date"
+        ></p-calendar>
+        <small
+          *ngIf="
+            addeditForm.get('dOExpiry')?.invalid &&
+            addeditForm.get('dOExpiry')?.touched
+          "
+          class="error-message"
+          >Expiry date is required.</small
+        >
+      </div>
+    </div>
+    <div class="button-cls">
+      <p-button
+        label="Cancel"
+        severity="danger"
+        (click)="onCancel()"
+      ></p-button>
+      <p-button
+        label="Submit"
+        severity="success"
+        (click)="onSubmit()"
+        [disabled]="
+          addeditForm.get('selectedCompany')?.value === null ||
+          addeditForm.get('selectedProduct')?.value === null ||
+          addeditForm.get('quantity')?.value === null ||
+          addeditForm.get('mrp')?.value === 0 ||
+          addeditForm.get('dOExpiry')?.value === null
+        "
+      ></p-button>
+    </div>
+  </form>
+</div>

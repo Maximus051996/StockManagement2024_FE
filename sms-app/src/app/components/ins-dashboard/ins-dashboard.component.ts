@@ -10,6 +10,8 @@ import HC_lollipop from 'highcharts/modules/lollipop';
 import HC_exporting from 'highcharts/modules/exporting';
 import HC_accessibility from 'highcharts/modules/accessibility';
 import { DashboardService } from '../../core/services/dashboard/dashboard.service';
+import { SharedService } from '../../core/services/shared/shared.service';
+import { Message } from '../../core/constants/messages';
 
 HC_more(Highcharts);
 HC_dumbbell(Highcharts);
@@ -31,7 +33,10 @@ export class InsDashboardComponent implements OnInit {
   activeUserCount = 0;
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: any;
-  constructor(private dashboardService: DashboardService) {
+  constructor(
+    private dashboardService: DashboardService,
+    private sharedService: SharedService
+  ) {
     this.getDashboardDetails();
   }
   ngOnInit(): void {}
@@ -47,13 +52,14 @@ export class InsDashboardComponent implements OnInit {
       await this.getchartDetails();
       this.isLoader = false;
     } catch (error) {
-      // Handle error
+      this.sharedService.openSnackBar(Message.errorAddeditdeleteMsg, 'OK');
+      throw error;
     }
   }
 
   async getchartDetails() {
     try {
-      let data = await this.dashboardService.top5CompanyDetails();
+      let data = await this.dashboardService.chartAllCompanyDetails();
       const chartData = data.map((item: any) => ({
         name: item.companyName,
         y: item.totalQuantity,
@@ -78,11 +84,11 @@ export class InsDashboardComponent implements OnInit {
           },
 
           subtitle: {
-            text: 'New Maa Durga Store',
+            text: Message.companyName,
           },
 
           title: {
-            text: 'Top 5 Companies with the most product in quantity (Stock Information)',
+            text: Message.dashboardBarChartTitle,
           },
 
           tooltip: {
@@ -91,20 +97,20 @@ export class InsDashboardComponent implements OnInit {
 
           xAxis: {
             title: {
-              text: 'Company Name',
+              text: Message.dashboardBarChartXAxisTitle,
             },
             type: 'category',
           },
 
           yAxis: {
             title: {
-              text: 'Total Product Quantity',
+              text: Message.dashboardBarChartYAxisTitle,
             },
           },
 
           series: [
             {
-              name: 'Total Products',
+              name: Message.dashboardBarChartSeriesName,
               data: chartData,
             },
           ],

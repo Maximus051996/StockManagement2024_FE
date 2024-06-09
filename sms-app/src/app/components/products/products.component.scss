@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 4rem;
+  margin-top: 2rem;
+}
+
+.table-container {
+  margin-top: 1rem;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+::ng-deep.p-datatable .p-datatable-tbody > tr > td {
+  text-align: left;
+  border: 1px solid #afbcd5;
+  border-width: 0 0 1px 0;
+  padding: 0.3rem 0.8rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+::ng-deep.p-datatable .p-paginator-bottom {
+  border-radius: 1rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+::ng-deep.p-paginator {
+  height: 4.1rem;
+}
+
+::ng-deep.p-button {
+  border-radius: 1rem;
+}
+
+.table-action-partition {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

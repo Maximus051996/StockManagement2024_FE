@@ -17,6 +17,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { MatDividerModule } from '@angular/material/divider';
 import { ChipModule } from 'primeng/chip';
 import { SharedService } from './core/services/shared/shared.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
@@ -37,6 +38,7 @@ import { SharedService } from './core/services/shared/shared.service';
     AvatarGroupModule,
     MatDividerModule,
     ChipModule,
+    NgxSpinnerModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -65,6 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   logOut(): void {
+    this.sharedService.showSpinner();
     this.isToken = null;
     localStorage.removeItem('token');
     this.authService.disableAuthenticationSubject();
@@ -128,9 +131,19 @@ export class AppComponent implements OnInit, OnDestroy {
               label: 'Product',
             },
             {
-              routerLink: '/ins/calculation',
+              routerLink: '/ins/calc-percent',
               path: 'assets/calculation.png',
-              label: 'Calculation',
+              label: 'Metrics',
+            },
+            {
+              routerLink: '/ins/damage-details',
+              path: 'assets/damaged-box.jpg',
+              label: 'Liability',
+            },
+            {
+              routerLink: '/ins/user-details',
+              path: 'assets/user.png',
+              label: 'User',
             }
           );
           break;

@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 6rem;
+  flex-wrap: wrap;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+::ng-deep .p-password input {
+  width: 100%;
+}
+
+.row-sub-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.dropdown-container,
+.input-container label {
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.input-container {
+  width: 45%;
+  margin-bottom: 1rem;
+}
+
+.button-cls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.75rem;
+}

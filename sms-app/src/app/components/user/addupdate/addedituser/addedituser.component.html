@@ -1,0 +1,147 @@
+<div class="container">
+  <form [formGroup]="addeditForm">
+    <div class="row-sub-container">
+      <div class="input-container">
+        <label for="firstName">First Name</label>
+        <input
+          [style]="{ width: '100%' }"
+          type="text"
+          autocomplete="off"
+          pInputText
+          id="firstName"
+          formControlName="firstName"
+        />
+        <small
+          *ngIf="
+            addeditForm.get('firstName')?.invalid &&
+            addeditForm.get('firstName')?.touched
+          "
+          class="error-message"
+          >First Name is required.</small
+        >
+      </div>
+      <div class="input-container">
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          autocomplete="off"
+          [style]="{ width: '100%' }"
+          pInputText
+          formControlName="lastName"
+        />
+        <small
+          *ngIf="
+            addeditForm.get('lastName')?.invalid &&
+            addeditForm.get('lastName')?.touched
+          "
+          class="error-message"
+          >Last Name is required.</small
+        >
+      </div>
+    </div>
+    <div class="row-sub-container">
+      <div class="input-container">
+        <label for="roleId">Role</label>
+        <p-dropdown
+          [options]="roleList"
+          id="roleId"
+          formControlName="roleId"
+          optionLabel="roleName"
+          placeholder="Select a role"
+          optionLabel="name"
+          optionValue="code"
+        />
+        <small
+          *ngIf="
+            addeditForm.get('roleId')?.invalid &&
+            addeditForm.get('roleId')?.touched
+          "
+          class="error-message"
+          >Role is required.</small
+        >
+      </div>
+      <div class="input-container">
+        <label for="phone">Phone</label>
+        <input
+          [style]="{ width: '100%' }"
+          inputId="phone"
+          autocomplete="off"
+          pInputText
+          formControlName="phone"
+          placeholder="Enter phone number"
+        />
+        <small
+          *ngIf="
+            addeditForm.get('phone')?.invalid &&
+            addeditForm.get('phone')?.touched
+          "
+          class="error-message"
+          >Phone is required and must be a valid 10-digit number.</small
+        >
+      </div>
+    </div>
+    <div class="row-sub-container">
+      <div class="input-container">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          autocomplete="off"
+          formControlName="email"
+          pInputText
+          [style]="{ width: '100%' }"
+        />
+        <small
+          *ngIf="
+            addeditForm.get('email')?.invalid &&
+            addeditForm.get('email')?.touched
+          "
+          class="error-message"
+          >Email is required.</small
+        >
+      </div>
+      <div class="input-container">
+        <label for="address">Address</label>
+        <textarea
+          [style]="{ width: '100%' }"
+          id="address"
+          autocomplete="off"
+          formControlName="address"
+          rows="2"
+          cols="30"
+          pInputTextarea
+        ></textarea>
+        <small
+          *ngIf="
+            addeditForm.get('address')?.invalid &&
+            addeditForm.get('address')?.touched
+          "
+          class="error-message"
+          >Address is required.</small
+        >
+      </div>
+    </div>
+
+    <div class="button-cls">
+      <p-button
+        label="Cancel"
+        severity="danger"
+        (click)="onCancel()"
+      ></p-button>
+      <p-button
+        label="Submit"
+        severity="success"
+        (click)="onSubmit()"
+        [disabled]="!addeditForm.valid"
+      ></p-button>
+    </div>
+  </form>
+  <div style="margin-top: 1rem">
+    <p-messages
+      [(value)]="messages"
+      [enableService]="false"
+      [closable]="false"
+    ></p-messages>
+  </div>
+</div>

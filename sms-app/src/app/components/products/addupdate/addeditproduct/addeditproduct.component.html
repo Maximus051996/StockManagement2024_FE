@@ -1,0 +1,184 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+  [fullScreen]="true"
+  ><p style="color: white">Loading...</p></ngx-spinner
+>
+<div class="container">
+  <form [formGroup]="addeditForm">
+    <div class="row-sub-container">
+      <div
+        class="dropdown-container"
+        [class.disabled]="productId ? true : false"
+      >
+        <p-dropdown
+          (blur)="
+            addeditForm.get('selectedCompany')?.markAsTouched();
+            addeditForm.get('productName')?.markAsDirty()
+          "
+          [ngClass]="{
+            'ng-dirty ng-touched':
+              addeditForm.get('selectedCompany')?.touched &&
+              addeditForm.get('productName')?.dirty
+          }"
+          [options]="companyList"
+          id="companyName"
+          aria-describedby="companyName-help"
+          formControlName="selectedCompany"
+          optionLabel="companyName"
+          [filter]="true"
+          filterBy="companyName"
+          [showClear]="true"
+          placeholder="Select a company"
+        >
+          <ng-template pTemplate="selectedItem" let-selectedOption>
+            <div class="flex align-items-center gap-2">
+              <div>{{ selectedOption.companyName }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-company pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <div>{{ company.companyName }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <small id="companyName-help"> Please select company Name. </small>
+      </div>
+      <div class="textbox-container">
+        <p-floatLabel>
+          <input
+            pInputText
+            (blur)="
+              addeditForm.get('productName')?.markAsTouched();
+              addeditForm.get('productName')?.markAsDirty()
+            "
+            [ngClass]="{
+              'ng-dirty ng-touched':
+                addeditForm.get('productName')?.touched &&
+                addeditForm.get('productName')?.dirty
+            }"
+            id="productName"
+            aria-describedby="productName-help"
+            autocomplete="off"
+            required="required"
+            formControlName="productName"
+            style="width: 85%"
+          />
+          <label for="productName">Product Name</label>
+        </p-floatLabel>
+        <small id="productName-help"> Please enter product Name. </small>
+      </div>
+    </div>
+    <div style="margin-top: 2rem">
+      <div>
+        <p-button
+          label="Add Row"
+          [rounded]="true"
+          severity="info"
+          (click)="addRow()"
+        ></p-button>
+      </div>
+      <p-messages
+        [(value)]="messages"
+        [enableService]="false"
+        [closable]="false"
+      ></p-messages>
+    </div>
+    <div style="margin-top: 1rem" formArrayName="rows">
+      <div
+        *ngFor="let row of rows.controls; let i = index"
+        [formGroupName]="i"
+        class="row1-sub-container"
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+          "
+        >
+          <p-button
+            icon="pi pi-times"
+            severity="danger"
+            (click)="deleteRowByIndex(i)"
+          ></p-button>
+        </div>
+        <div class="dropdown-number-date-container-textbox">
+          <label>Warehouse Type </label>
+          <p-dropdown
+            [style]="{ width: '100%' }"
+            [options]="warehouseList"
+            formControlName="selectedWarehouse"
+            optionLabel="name"
+            placeholder="Select a warehouse"
+          ></p-dropdown>
+        </div>
+        <div class="dropdown-number-date-container-textbox">
+          <label>MRP</label>
+          <p-inputNumber
+            mode="currency"
+            currency="INR"
+            locale="en-IN"
+            [style]="{ width: '100%' }"
+            formControlName="mrp"
+            placeholder="MRP"
+          ></p-inputNumber>
+        </div>
+        <div class="dropdown-number-date-container-textbox">
+          <label>Percentage</label>
+          <p-inputNumber
+            suffix=" %"
+            [style]="{ width: '100%' }"
+            formControlName="defaultpercentage"
+            placeholder="Percentage"
+          ></p-inputNumber>
+        </div>
+        <div class="dropdown-number-date-container-textbox">
+          <label>Quantity</label>
+          <p-inputNumber
+            [style]="{ width: '100%' }"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            spinnerMode="horizontal"
+            decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            formControlName="quantity"
+            placeholder="Quantity"
+          ></p-inputNumber>
+        </div>
+        <div class="dropdown-number-date-container-textbox">
+          <label> Date Of Expiry </label>
+          <p-calendar
+            [style]="{ width: '100%', 'margin-left': '5rem' }"
+            [showIcon]="true"
+            formControlName="dOExpiry"
+            [showOnFocus]="false"
+            placeholder="Date Of Expiry"
+          ></p-calendar>
+        </div>
+      </div>
+    </div>
+    <div class="button-cls">
+      <p-button
+        label="Cancel"
+        severity="danger"
+        (click)="onCancel()"
+      ></p-button>
+      <p-button
+        [style]="{ 'margin-right': '9.3rem' }"
+        label="Submit"
+        severity="success"
+        (click)="onSubmit()"
+        [disabled]="
+          addeditForm.get('selectedCompany')?.value === null ||
+          addeditForm.get('productName')?.value === ''
+        "
+      ></p-button>
+    </div>
+  </form>
+</div>

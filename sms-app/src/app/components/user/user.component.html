@@ -14,39 +14,17 @@
     </div>
     <div style="margin-left: 2rem">
       <p-button
-        label="Add Company"
+        label="Add User"
         [text]="true"
         [raised]="true"
         severity="warning"
         (click)="AddRecord()"
       />
     </div>
-    <div style="margin-left: 2rem">
-      <p-fileUpload
-        #fileUpload
-        mode="basic"
-        accept=".xlsx,.xls"
-        [maxFileSize]="1000000"
-        label="Import"
-        chooseLabel="Import"
-        class="mr-2 inline-block"
-        (onSelect)="onFileSelect($event)"
-      >
-      </p-fileUpload>
-    </div>
-    <div style="margin-left: 2rem">
-      <p-button
-        label="Export Data"
-        (click)="exportData()"
-        [text]="true"
-        [raised]="true"
-        [plain]="true"
-      />
-    </div>
   </div>
   <div class="table-container">
     <p-table
-      [value]="companies"
+      [value]="users"
       [loading]="loading"
       [paginator]="true"
       [rows]="5"
@@ -55,16 +33,34 @@
     >
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="companyName" style="width: 90%">
-            Company Name <p-sortIcon field="companyName" />
-          </th>
+          <th style="width: 15%">Name</th>
+          <th style="width: 15%">Role</th>
+          <th style="width: 20%">Contact Details</th>
+          <th style="width: 25%">Address</th>
+          <th style="width: 15%">Status</th>
           <th style="width: 8%"></th>
-          <th style="width: 2%"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-company>
+      <ng-template pTemplate="body" let-user>
         <tr>
-          <td>{{ company.companyName }}</td>
+          <td>{{ user.fullName }}</td>
+          <td>
+            {{ user.roleName === "R1" ? "Sales Assistant" : "Instructor" }}
+          </td>
+          <td>{{ user.phone + " | " + user.email }}</td>
+          <td>
+            {{
+              user.address.length > 30
+                ? user.address.slice(0, 30) + "..."
+                : user.address
+            }}
+          </td>
+          <td>
+            <p-tag
+              [severity]="user.isActive === false ? 'warning' : 'info'"
+              [value]="user.isActive === false ? 'Inactive' : 'Active'"
+            ></p-tag>
+          </td>
           <td>
             <div class="table-action-partition">
               <button
@@ -72,15 +68,25 @@
                 pButton
                 pRipple
                 icon="pi pi-pencil"
-                (click)="selectDataById(company._id)"
+                (click)="selectDataById(user._id)"
               ></button>
               <button
+                *ngIf="user.isActive"
                 type="button"
                 severity="danger"
                 pButton
                 pRipple
                 icon="pi pi-trash"
-                (click)="deleteDataById(company._id)"
+                (click)="deleteDataById(user._id)"
+              ></button>
+              <button
+                *ngIf="!user.isActive"
+                type="button"
+                severity="success"
+                pButton
+                pRipple
+                icon="pi pi-verified"
+                (click)="activeById(user._id)"
               ></button>
             </div>
           </td>
@@ -89,7 +95,7 @@
       </ng-template>
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="4">No Company found.</td>
+          <td colspan="4">No User found.</td>
         </tr>
       </ng-template>
     </p-table>

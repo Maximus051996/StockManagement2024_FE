@@ -46,7 +46,12 @@ export class LoginComponent implements OnInit {
     private userService: UserService
   ) {}
   ngOnInit() {
+    this.sharedService.showSpinner();
     this.createForm();
+    this.jWTTokenAccesscheck();
+  }
+
+  jWTTokenAccesscheck() {
     if (this.authService.getJwtToken()) {
       const userDetails = this.authService.getUserDetails();
       if (userDetails.roleId === 'R1') {
@@ -56,6 +61,7 @@ export class LoginComponent implements OnInit {
       }
     }
   }
+
   createForm() {
     this.loginForm = this.fb.group({
       userName: ['', [Validators.required]],
@@ -84,7 +90,7 @@ export class LoginComponent implements OnInit {
 
         this.sharedService.openSnackBar(Message.loginSuccessMsg, 'OK');
       } else {
-        throw new Error('Login failed');
+        throw Message.loginfailMsg;
       }
     } catch (error) {
       this.sharedService.openSnackBar(Message.errorLoginMsg, 'OK');

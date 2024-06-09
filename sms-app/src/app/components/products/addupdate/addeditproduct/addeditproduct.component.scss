@@ -1,0 +1,148 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 4rem 6rem;
+  flex-wrap: wrap;
+}
+
+::ng-deep .p-dropdown {
+  width: 100%;
+}
+
+.row-sub-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.dropdown-container {
+  width: 40%;
+}
+
+.textbox-container {
+  margin-left: 2rem;
+  flex-grow: 1;
+}
+
+.row1-sub-container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.dropdown-number-date-container-textbox {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0.5rem;
+  width: 15%;
+  flex-wrap: wrap;
+}
+
+.dropdown-number-date-container-textbox label {
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+.disabled {
+  pointer-events: none;
+  opacity: 0.6; /* You can adjust the opacity to make it look disabled */
+  /* Any other styles to visually indicate it's disabled */
+}
+
+::ng-deep .p-message.p-message-info {
+  background: rgb(172 236 169 / 31%);
+  border: solid #659729;
+  border-width: 0 0 0 6px;
+  color: #62265c;
+  width: 91.4%;
+  margin-top: 2rem;
+}
+
+.button-cls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    margin: 2rem 3rem;
+  }
+
+  .row1-sub-container,
+  .row-sub-container,
+  .button-cls {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dropdown-container,
+  .textbox-container,
+  .dropdown-number-date-container-textbox {
+    width: 100%;
+  }
+
+  .textbox-container {
+    margin-left: 0;
+  }
+
+  .button-cls p-button {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .button-cls p-button:last-child {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem 2rem;
+  }
+
+  .button-cls p-button {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .button-cls p-button:last-child {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    margin: 0.5rem 1rem;
+  }
+
+  .dropdown-container,
+  .textbox-container,
+  .dropdown-number-date-container-textbox {
+    width: 100%;
+  }
+
+  .button-cls p-button {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .button-cls p-button:last-child {
+    margin-right: 0;
+  }
+}
+
+.row-alert {
+  display: flex;
+  align-items: center;
+  margin-left: 1rem;
+  font-size: 1rem;
+  background: #75a52a38;
+  border-radius: 5%;
+  width: 10%;
+  justify-content: center;
+  font-family: sans-serif;
+}

@@ -4,8 +4,13 @@ import { InsDashboardComponent } from '../../../../components/ins-dashboard/ins-
 import { authGuard } from '../../../guards/auth.guard';
 import { ProductsComponent } from '../../../../components/products/products.component';
 import { CompanyComponent } from '../../../../components/company/company.component';
-import { CalculationComponent } from '../../../../components/calculation/calculation.component';
-import { AddeditcompanyComponent } from '../../../../components/company/update/addeditcompany/addeditcompany/addeditcompany.component';
+import { AddeditcompanyComponent } from '../../../../components/company/addupdate/addeditcompany/addeditcompany/addeditcompany.component';
+import { AddeditproductComponent } from '../../../../components/products/addupdate/addeditproduct/addeditproduct.component';
+import { PercCalcuComponent } from '../../../../components/percentage-calculation/perc-calcu/perc-calcu.component';
+import { DamageProductsComponent } from '../../../../components/damage-product/damage-products/damage-products.component';
+import { AddeditdamageproductComponent } from '../../../../components/damage-product/addupdate/addeditdamageproduct/addeditdamageproduct.component';
+import { AddedituserComponent } from '../../../../components/user/addupdate/addedituser/addedituser.component';
+import { UserComponent } from '../../../../components/user/user.component';
 
 const routes: Routes = [
   {
@@ -34,8 +39,48 @@ const routes: Routes = [
     canActivate: [authGuard],
   },
   {
-    path: 'calculation',
-    component: CalculationComponent,
+    path: 'calc-percent',
+    component: PercCalcuComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'damage-details',
+    component: DamageProductsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'edit-damage-details/:id',
+    component: AddeditdamageproductComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'add-damage-details',
+    component: AddeditdamageproductComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'edit-product/:id',
+    component: AddeditproductComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'add-product',
+    component: AddeditproductComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'edit-user/:id',
+    component: AddedituserComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'add-user',
+    component: AddedituserComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'user-details',
+    component: UserComponent,
     canActivate: [authGuard],
   },
 ];

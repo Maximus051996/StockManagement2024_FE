@@ -31,18 +31,18 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 })
 export class AddeditcompanyComponent implements OnInit {
   addeditForm!: FormGroup;
-  isEdit = false; // Flag to check if it's edit mode
-  companyId: string | undefined; // Variable to store company ID during edit
+  isEdit = false;
+  companyId: string | undefined;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private companyService: CompanyService,
     private sharedService: SharedService
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.assignInitialValue();
   }
+
+  ngOnInit(): void {}
 
   cancel(): void {
     this.addeditForm.reset();
@@ -53,26 +53,28 @@ export class AddeditcompanyComponent implements OnInit {
     this.addeditForm = this.fb.group({
       companyName: ['', Validators.required],
     });
-    // Check if it's edit mode and patch the form with existing data
     if (this.router.url.includes('edit')) {
+      this.sharedService.showSpinner();
       this.isEdit = true;
       const segments = this.router.url.split('/');
-      this.companyId = segments[segments.length - 1]; // Get company ID from URL
-      this.patchFormData(); // Patch form with existing data
+      this.companyId = segments[segments.length - 1];
+      this.patchFormData();
     }
   }
 
   patchFormData() {
-    // Fetch existing company data by ID and patch form with it
     if (this.companyId) {
       this.companyService.getCompanyById(this.companyId).subscribe(
         (company) => {
           this.addeditForm.patchValue({
             companyName: company.companyName,
           });
+          this.sharedService.hideSpinner();
         },
-        () => {
+        (error) => {
+          this.sharedService.hideSpinner();
           this.sharedService.openSnackBar(Message.errorMsg, 'OK');
+          throw error;
         }
       );
     }
@@ -81,41 +83,27 @@ export class AddeditcompanyComponent implements OnInit {
   saveCompany() {
     if (this.addeditForm.valid) {
       this.sharedService.showSpinner();
-      if (this.isEdit && this.companyId) {
-        // Update existing company
-        this.companyService
-          .updateCompany(this.companyId, this.addeditForm.value)
-          .subscribe(
-            (res) => {
-              this.sharedService.openSnackBar(res.message, 'OK');
-              this.router.navigate(['/ins/company']);
-              this.sharedService.hideSpinner();
-            },
-            (error) => {
-              this.sharedService.openSnackBar(
-                Message.errorAddeditdeleteMsg,
-                'OK'
-              );
-            }
-          );
-      } else {
-        // Add new company
-        this.companyService.createCompany(this.addeditForm.value).subscribe(
-          (res) => {
-            this.sharedService.openSnackBar(res.message, 'OK');
-            if (!res.isdublicate) {
-              this.router.navigate(['/ins/company']);
-            }
-            this.sharedService.hideSpinner();
-          },
-          (error) => {
-            this.sharedService.openSnackBar(
-              Message.errorAddeditdeleteMsg,
-              'OK'
-            );
+      const companyData = this.addeditForm.value;
+
+      const saveObservable =
+        this.isEdit && this.companyId
+          ? this.companyService.updateCompany(this.companyId, companyData)
+          : this.companyService.createCompany(companyData);
+
+      saveObservable.subscribe(
+        (res) => {
+          this.sharedService.openSnackBar(res.message, 'OK');
+          if (!this.isEdit || !res.isdublicate) {
+            this.router.navigate(['/ins/company']);
           }
-        );
-      }
+          this.sharedService.hideSpinner();
+        },
+        (error) => {
+          this.sharedService.openSnackBar(Message.errorAddeditdeleteMsg, 'OK');
+          this.sharedService.hideSpinner();
+          throw error;
+        }
+      );
     }
   }
 }
